@@ -12,4 +12,14 @@ export default class TeamsServices {
 
     return { status: 200, data: allTeams };
   }
+
+  async findByPk(id: Teams['id']): Promise<{ status: number, data: Teams | null }> {
+    const team = await this.teamsModel.findByPk(id);
+
+    if (team === null) {
+      return { status: 404, data: null };
+    }
+
+    return { status: 200, data: team };
+  }
 }

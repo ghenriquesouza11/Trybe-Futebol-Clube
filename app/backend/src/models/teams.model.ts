@@ -13,4 +13,14 @@ export default class TeamsModel implements TeamsModelInterface {
       teamName: team.teamName,
     }));
   }
+
+  async findByPk(id: Teams['id']): Promise<Teams | null> {
+    const team = await this.model.findByPk(id);
+
+    if (team === null) {
+      return null;
+    }
+
+    return { id, teamName: team.teamName };
+  }
 }
