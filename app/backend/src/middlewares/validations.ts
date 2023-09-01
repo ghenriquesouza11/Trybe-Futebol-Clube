@@ -7,6 +7,10 @@ class Validations {
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
+    const emailParam = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailParam.test(email) || password.length < 6) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
 
     next();
   }
