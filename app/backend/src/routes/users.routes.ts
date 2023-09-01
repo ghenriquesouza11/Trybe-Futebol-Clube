@@ -14,4 +14,11 @@ usersRoutes.post(
   (req: Request, res: Response) => usersControllers.login(req, res),
 );
 
+usersRoutes.get(
+  '/login/role',
+  Validations.validateToken,
+
+  (req: Request, res: Response) => usersControllers.role(req, res),
+);
+
 export default usersRoutes;

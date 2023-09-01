@@ -17,4 +17,14 @@ export default class UserModel implements UsersModelInterface {
 
     return user;
   }
+
+  async role(id: number): Promise<{ role: string; } | null> {
+    const user = await this.model.findByPk(id);
+
+    if (!user) {
+      return null;
+    }
+
+    return { role: user.role };
+  }
 }

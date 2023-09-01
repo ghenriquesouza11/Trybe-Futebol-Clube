@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { verify, extractToken } from '../utils/jwt.utils';
 
 class Validations {
   static validateLogin(req: Request, res: Response, next: NextFunction) {
@@ -13,6 +14,18 @@ class Validations {
     }
 
     next();
+  }
+
+  static validateToken(req: Request, res: Response, next: NextFunction) {
+    const { authorization } = req.headers;
+    if (!authorization) return res.status(401).json({ message: 'Token not found' });
+    const token = extractToken(authorization);
+    try {
+      verify(token);
+      return next();
+    } catch (error) {
+      return res.status(401).json({ message: 'Token must be a valid token' });
+    }
   }
 }
 

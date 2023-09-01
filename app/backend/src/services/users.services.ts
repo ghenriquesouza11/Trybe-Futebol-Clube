@@ -1,6 +1,6 @@
 import { compareSync } from 'bcryptjs';
 import UserModel from '../models/users.model';
-import generateToken from '../utils/jwt.utils';
+import { generateToken } from '../utils/jwt.utils';
 
 export default class UsersServices {
   constructor(private userModel: UserModel = new UserModel()) { }
@@ -18,5 +18,15 @@ export default class UsersServices {
     const token = generateToken({ id: user.id, email: user.email });
 
     return { status: 200, data: { token } };
+  }
+
+  async role(id: number): Promise<{ status: number, data: { role: string } | string }> {
+    const role = await this.userModel.role(id);
+
+    if (!role) {
+      return { status: 401, data: 'User does not exists' };
+    }
+
+    return { status: 200, data: role };
   }
 }
