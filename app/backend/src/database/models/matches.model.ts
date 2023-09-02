@@ -65,3 +65,5 @@ SequelizeMatches.init(
 
 SequelizeMatches.belongsTo(SequelizeTeams, { foreignKey: 'homeTeamId', as: 'homeTeam' });
 SequelizeMatches.belongsTo(SequelizeTeams, { foreignKey: 'awayTeamId', as: 'awayTeam' });
+
+export default SequelizeMatches;
