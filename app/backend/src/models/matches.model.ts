@@ -15,4 +15,8 @@ export default class MatchesModels implements MatchesModelInterface {
 
     return allMatches;
   }
+
+  async finishMatch(id: number): Promise<void> {
+    await this.model.update({ inProgress: false }, { where: { id } });
+  }
 }

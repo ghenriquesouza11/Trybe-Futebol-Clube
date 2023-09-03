@@ -22,4 +22,12 @@ export default class MatchesControllers {
 
     return res.status(status).json(data);
   }
+
+  async finishMatch(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const { status, data } = await this.matchesServices.finishMatch(parseInt(id, 10));
+
+    return res.status(status).json(data);
+  }
 }

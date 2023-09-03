@@ -9,4 +9,10 @@ export default class MatchesServices {
 
     return { status: 200, data: allMatches };
   }
+
+  async finishMatch(id: number): Promise<{ status: number, data: { message: string } }> {
+    await this.matchesModels.finishMatch(id);
+
+    return { status: 200, data: { message: 'Finished' } };
+  }
 }
