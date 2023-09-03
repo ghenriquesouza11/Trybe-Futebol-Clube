@@ -15,4 +15,11 @@ export default class MatchesServices {
 
     return { status: 200, data: { message: 'Finished' } };
   }
+
+  async updateMatch(matchData: { homeTeamGoals: number; awayTeamGoals: number }, id: number):
+  Promise<{ status: number, data: { message: string } }> {
+    await this.matchesModels.updateMatch(matchData, id);
+
+    return { status: 200, data: { message: 'Updated' } };
+  }
 }

@@ -30,4 +30,13 @@ export default class MatchesControllers {
 
     return res.status(status).json(data);
   }
+
+  async updateMatch(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const matchData = req.body;
+
+    const { status, data } = await this.matchesServices.updateMatch(matchData, parseInt(id, 10));
+
+    return res.status(status).json(data);
+  }
 }

@@ -4,4 +4,7 @@ export interface MatchesModelInterface {
   getAllMatches(): Promise<SequelizeMatches[] >;
 
   finishMatch(id: number): Promise<void>;
+
+  updateMatch(matchData: { homeTeamGoals: number, awayTeamGoals: number }, id: number):
+  Promise<void>;
 }
