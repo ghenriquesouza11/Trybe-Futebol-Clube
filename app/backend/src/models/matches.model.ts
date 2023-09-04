@@ -1,6 +1,7 @@
 import SequelizeTeams from '../database/models/teams.model';
 import SequelizeMatches from '../database/models/matches.model';
 import { MatchesModelInterface } from '../Interfaces/Matches/MatchesModelInterface';
+import { Match } from '../Interfaces/matches.interface';
 
 export default class MatchesModels implements MatchesModelInterface {
   private model = SequelizeMatches;
@@ -24,5 +25,14 @@ export default class MatchesModels implements MatchesModelInterface {
   Promise<void> {
     const { homeTeamGoals, awayTeamGoals } = matchData;
     await this.model.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+  }
+
+  async createMatch(matchData: Omit<Match, 'id'>): Promise<Match> {
+    const createdMatch = await this.model.create(matchData);
+
+    const { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }:
+    Match = createdMatch;
+
+    return { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress };
   }
 }

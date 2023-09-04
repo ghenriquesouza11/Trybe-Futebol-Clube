@@ -1,4 +1,5 @@
 import SequelizeMatches from '../../database/models/matches.model';
+import { Match } from '../matches.interface';
 
 export interface MatchesModelInterface {
   getAllMatches(): Promise<SequelizeMatches[] >;
@@ -7,4 +8,6 @@ export interface MatchesModelInterface {
 
   updateMatch(matchData: { homeTeamGoals: number, awayTeamGoals: number }, id: number):
   Promise<void>;
+
+  createMatch(matchData: Partial<Match>): Promise<Match>;
 }

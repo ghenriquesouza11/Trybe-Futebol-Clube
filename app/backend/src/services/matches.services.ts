@@ -1,3 +1,4 @@
+import { Match } from '../Interfaces/matches.interface';
 import SequelizeMatches from '../database/models/matches.model';
 import MatchesModels from '../models/matches.model';
 
@@ -21,5 +22,11 @@ export default class MatchesServices {
     await this.matchesModels.updateMatch(matchData, id);
 
     return { status: 200, data: { message: 'Updated' } };
+  }
+
+  async createMatch(matchData: Omit<Match, 'id'>): Promise<{ status: number, data: Match }> {
+    const createdMatch = await this.matchesModels.createMatch(matchData);
+
+    return { status: 201, data: createdMatch };
   }
 }
