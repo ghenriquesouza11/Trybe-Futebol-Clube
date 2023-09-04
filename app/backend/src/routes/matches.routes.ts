@@ -29,6 +29,7 @@ matchesRouter
   .post(
     '/matches',
     Validations.validateToken,
+    Validations.verifyTeam,
     (req: Request, res: Response) => matchesControllers.createMatch(req, res),
   );
 
