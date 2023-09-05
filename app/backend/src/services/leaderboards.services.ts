@@ -13,21 +13,21 @@ export default class LeaderboardsServices {
     const allTeams = await this.teamsModel.findAll();
 
     const performances = await Promise.all(allTeams.map(async (team) => {
-      const totalGames = await this.leaderboardModel.totalGames(team.id);
-      const totalVictories = await this.leaderboardModel.totalVictories(team.id);
       const totalDraws = await this.leaderboardModel.totalDraws(team.id);
-      const totalLosses = await this.leaderboardModel.totalLosses(team.id);
-      const goalsFavor = await this.leaderboardModel.goalsFavor(team.id);
-      const goalsOwn = await this.leaderboardModel.goalsOwn(team.id);
+      const totalGames = await this.leaderboardModel.totalGames(team.id);
 
       return { name: team.teamName,
-        totalPoints: (totalVictories * 3) + totalDraws,
+        totalPoints: ((await this.leaderboardModel.totalVictories(team.id)) * 3) + totalDraws,
         totalGames,
-        totalVictories,
+        totalVictories: await this.leaderboardModel.totalVictories(team.id),
         totalDraws,
-        totalLosses,
-        goalsFavor,
-        goalsOwn };
+        totalLosses: await this.leaderboardModel.totalLosses(team.id),
+        goalsFavor: await this.leaderboardModel.goalsFavor(team.id),
+        goalsOwn: await this.leaderboardModel.goalsOwn(team.id),
+        goalsBalance: (await this.leaderboardModel.goalsFavor(team.id))
+         - (await this.leaderboardModel.goalsOwn(team.id)),
+        efficiency: (((((await this.leaderboardModel
+          .totalVictories(team.id)) * 3) + totalDraws) / (totalGames * 3)) * 100).toFixed(2) };
     }));
 
     return { status: 200, data: performances };

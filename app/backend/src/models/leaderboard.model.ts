@@ -5,7 +5,8 @@ export default class LeaderboardModels implements LeaderboardsModelsInterface {
   private mathesModel = SequelizeMatches;
 
   async totalGames(teamId: number): Promise<number> {
-    const totalGames = (await this.mathesModel.findAll({ where: { homeTeamId: teamId } })).length;
+    const totalGames = (await this
+      .mathesModel.findAll({ where: { homeTeamId: teamId, inProgress: false } })).length;
 
     return totalGames;
   }
